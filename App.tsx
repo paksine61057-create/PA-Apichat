@@ -10,7 +10,7 @@ import {
   Search, Lock, GraduationCap, Loader2, User, Home, Award, 
   FileStack, Mail, Menu, X, ChevronRight, Book, Monitor, 
   BarChart3, Users, HeartHandshake, ClipboardList, Zap, Rocket, 
-  RefreshCcw, AlertCircle, ExternalLink, Globe, BookOpen, Layers
+  RefreshCcw, AlertCircle, Globe, BookOpen, Layers, Facebook, Phone
 } from 'lucide-react';
 
 type TabType = 'HOME' | 'ABOUT' | 'CRITERIA' | 'REPOSITORY' | 'CONTACT';
@@ -260,42 +260,53 @@ const App: React.FC = () => {
             )}
 
             {currentTab === 'ABOUT' && (
-              <div className="max-w-4xl mx-auto px-4 py-20 text-center">
+              <div className="max-w-4xl mx-auto px-4 py-20 text-center animate-in fade-in slide-in-from-bottom duration-500">
                  <div className="w-48 h-48 bg-slate-200 rounded-full mx-auto mb-8 overflow-hidden border-8 border-white shadow-xl">
                     <img src="https://images.unsplash.com/photo-1544717297-fa154daaf762?w=400&h=400&fit=crop" alt="Teacher" className="w-full h-full object-cover" />
                  </div>
-                 <h2 className="text-3xl font-black text-slate-800 mb-4">ชื่อ-นามสกุล ของท่าน</h2>
+                 <h2 className="text-3xl font-black text-slate-800 mb-2">ชื่อ-นามสกุล ของท่าน</h2>
                  <p className="text-indigo-600 font-bold text-xl mb-6">ตำแหน่ง ครู วิทยฐานะ...</p>
-                 <p className="text-slate-500 leading-relaxed max-w-2xl mx-auto text-lg mb-12">
-                   ยินดีต้อนรับสู่พอร์ตโฟลิโอออนไลน์ รวบรวมผลงานการจัดการเรียนรู้ นวัตกรรมการศึกษา และการพัฒนาตนเองอย่างต่อเนื่อง เพื่อยกระดับคุณภาพการศึกษาและพัฒนาผู้เรียนอย่างรอบด้าน
-                 </p>
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
-                    <div className="bg-white p-6 rounded-2xl border border-slate-100">
-                       <h4 className="font-bold text-slate-800 mb-2">การศึกษา</h4>
-                       <ul className="text-slate-500 space-y-1">
-                          <li>ปริญญาตรี ครุศาสตรบัณฑิต (สาขา...)</li>
-                          <li>ปริญญาโท ศึกษาศาสตรมหาบัณฑิต (สาขา...)</li>
+                 <div className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 mb-12">
+                   <p className="text-slate-600 leading-relaxed max-w-2xl mx-auto text-lg italic">
+                     "ยินดีต้อนรับสู่พอร์ตโฟลิโอออนไลน์ รวบรวมผลงานการจัดการเรียนรู้ นวัตกรรมการศึกษา และการพัฒนาตนเองอย่างต่อเนื่อง เพื่อยกระดับคุณภาพการศึกษาและพัฒนาผู้เรียนอย่างรอบด้าน"
+                   </p>
+                 </div>
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                    <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                       <h4 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                         <Award className="w-5 h-5 text-indigo-500" /> การศึกษา
+                       </h4>
+                       <ul className="text-slate-500 space-y-3">
+                          <li className="flex gap-2"><div className="w-1.5 h-1.5 bg-indigo-400 rounded-full mt-2 shrink-0"></div> ปริญญาตรี ครุศาสตรบัณฑิต (สาขา...)</li>
+                          <li className="flex gap-2"><div className="w-1.5 h-1.5 bg-indigo-400 rounded-full mt-2 shrink-0"></div> ปริญญาโท ศึกษาศาสตรมหาบัณฑิต (สาขา...)</li>
                        </ul>
                     </div>
-                    <div className="bg-white p-6 rounded-2xl border border-slate-100">
-                       <h4 className="font-bold text-slate-800 mb-2">สถานศึกษา</h4>
-                       <p className="text-slate-500">โรงเรียน....................................</p>
-                       <p className="text-slate-500">สังกัด........................................</p>
+                    <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
+                       <h4 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                         <Home className="w-5 h-5 text-emerald-500" /> สถานศึกษา
+                       </h4>
+                       <div className="space-y-3">
+                          <p className="text-slate-500 flex items-center gap-3"><span className="font-bold text-slate-700 w-20">โรงเรียน:</span> โรงเรียน....................................</p>
+                          <p className="text-slate-500 flex items-center gap-3"><span className="font-bold text-slate-700 w-20">สังกัด:</span> สังกัด........................................</p>
+                       </div>
                     </div>
                  </div>
               </div>
             )}
 
             {currentTab === 'CRITERIA' && (
-              <div className="max-w-7xl mx-auto px-4 py-16">
+              <div className="max-w-7xl mx-auto px-4 py-16 animate-in fade-in duration-500">
                  <div className="text-center mb-16">
-                    <h2 className="text-3xl font-black text-slate-800 mb-4">ผลงานตามเกณฑ์การประเมิน ว9/PA</h2>
-                    <p className="text-slate-500">เลือกดูผลงานแยกตามตัวชี้วัดเพื่อความสะดวกในการประเมิน</p>
+                    <h2 className="text-3xl font-black text-slate-800 mb-4 uppercase">ผลงานตามเกณฑ์การประเมิน ว9/PA</h2>
+                    <p className="text-slate-500 max-w-2xl mx-auto">เลือกดูผลงานแยกตามตัวชี้วัดเพื่อความสะดวกในการประเมินและสรุปผลงานวิชาการ</p>
                  </div>
-                 <div className="space-y-16">
+                 <div className="space-y-20">
                     {paSections.map((section, sIdx) => (
                        <div key={sIdx}>
-                          <h3 className={`text-2xl font-black mb-8 pb-4 border-b-4 border-${section.color}-500 inline-block`}>{section.title}</h3>
+                          <div className="flex items-center gap-4 mb-8">
+                             <h3 className={`text-2xl font-black pb-2 border-b-4 border-${section.color}-500`}>{section.title}</h3>
+                             <div className={`flex-grow h-px bg-slate-200`}></div>
+                          </div>
                           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                              {section.points.map((point) => (
                                 <button 
@@ -303,13 +314,13 @@ const App: React.FC = () => {
                                   onClick={() => { setActiveCategory(point.id as any); setCurrentTab('REPOSITORY'); }}
                                   className="bg-white p-6 rounded-3xl border border-slate-100 hover:border-indigo-500 hover:shadow-xl transition-all group text-left"
                                 >
-                                   <div className={`w-12 h-12 bg-${section.color}-50 text-${section.color}-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                                   <div className={`w-12 h-12 bg-slate-50 text-slate-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-all`}>
                                       <point.icon className="w-6 h-6" />
                                    </div>
                                    <h4 className="font-bold text-slate-800 mb-2 line-clamp-1">{point.label}</h4>
-                                   <p className="text-slate-400 text-sm">{point.desc}</p>
+                                   <p className="text-slate-400 text-sm h-10 overflow-hidden">{point.desc}</p>
                                    <div className="mt-4 flex items-center text-xs font-bold text-indigo-600 gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                      ดูผลงานทั้งหมด <ChevronRight className="w-3 h-3" />
+                                      ดูผลงานในหมวดนี้ <ChevronRight className="w-3 h-3" />
                                    </div>
                                 </button>
                              ))}
@@ -321,7 +332,7 @@ const App: React.FC = () => {
             )}
 
             {currentTab === 'REPOSITORY' && (
-              <div className="max-w-7xl mx-auto px-4 py-16">
+              <div className="max-w-7xl mx-auto px-4 py-16 animate-in fade-in duration-500">
                  <div className="flex flex-col md:flex-row gap-6 mb-12 items-center justify-between">
                     <div>
                        <h2 className="text-3xl font-black text-slate-800">คลังผลงาน</h2>
@@ -361,7 +372,7 @@ const App: React.FC = () => {
             )}
 
             {currentTab === 'CONTACT' && (
-              <div className="max-w-4xl mx-auto px-4 py-20">
+              <div className="max-w-4xl mx-auto px-4 py-20 animate-in fade-in slide-in-from-top duration-500">
                  <div className="bg-white rounded-[3rem] shadow-xl overflow-hidden flex flex-col md:flex-row border border-slate-100">
                     <div className="bg-indigo-600 p-12 text-white md:w-1/3 flex flex-col justify-center">
                        <h2 className="text-3xl font-black mb-6">ติดต่อครู</h2>
@@ -369,11 +380,15 @@ const App: React.FC = () => {
                        <div className="space-y-6">
                           <div className="flex items-center gap-4">
                              <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center"><Mail className="w-5 h-5"/></div>
-                             <span className="font-bold">email@school.ac.th</span>
+                             <span className="font-bold text-sm truncate">email@school.ac.th</span>
                           </div>
                           <div className="flex items-center gap-4">
-                             <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center"><Globe className="w-5 h-5"/></div>
-                             <span className="font-bold">www.facebook.com/teacher</span>
+                             <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center"><Facebook className="w-5 h-5"/></div>
+                             <span className="font-bold text-sm">fb.com/teacher</span>
+                          </div>
+                          <div className="flex items-center gap-4">
+                             <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center"><Phone className="w-5 h-5"/></div>
+                             <span className="font-bold text-sm">08x-xxx-xxxx</span>
                           </div>
                        </div>
                     </div>
