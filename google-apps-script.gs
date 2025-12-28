@@ -1,6 +1,6 @@
 
 /**
- * GOOGLE APPS SCRIPT BACKEND
+ * GOOGLE APPS SCRIPT BACKEND V2
  * 1. Create a Google Sheet.
  * 2. Create a sheet named "Works" with headers: id, title, category, description, type, url, createdAt
  * 3. Go to Extensions -> Apps Script.
@@ -8,11 +8,31 @@
  * 5. Deploy -> New Deployment -> Web App -> Execute as "Me" -> Access "Anyone".
  */
 
-const SPREADSHEET_ID = SpreadsheetApp.getActiveSpreadsheet().getId();
 const SHEET_NAME = "Works";
 
+function getSheet() {
+  try {
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    if (!ss) throw new Error("Could not find active spreadsheet");
+    let sheet = ss.getSheetByName(SHEET_NAME);
+    if (!sheet) {
+      // Create sheet if not exists
+      sheet = ss.insertSheet(SHEET_NAME);
+      sheet.appendRow(['id', 'title', 'category', 'description', 'type', 'url', 'createdAt']);
+    }
+    return sheet;
+  } catch (e) {
+    return null;
+  }
+}
+
 function doGet(e) {
-  const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAME);
+  const sheet = getSheet();
+  if (!sheet) {
+    return ContentService.createTextOutput(JSON.stringify({ status: 'error', message: 'Sheet connection failed. Please make sure the script is bound to a Google Sheet.' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
   const data = sheet.getDataRange().getValues();
   const headers = data[0];
   const items = [];
@@ -25,11 +45,11 @@ function doGet(e) {
     items.push(item);
   }
   
-  // Return sorted by date (newest first)
+  // Sort by date (newest first)
   items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   
-  return ContentService.createTextOutput(JSON.stringify({ status: 'success', data: items }))
-    .setMimeType(ContentService.MimeType.JSON);
+  const response = JSON.stringify({ status: 'success', data: items });
+  return ContentService.createTextOutput(response).setMimeType(ContentService.MimeType.JSON);
 }
 
 function doPost(e) {
@@ -37,8 +57,10 @@ function doPost(e) {
     const postData = JSON.parse(e.postData.contents);
     const action = postData.action;
     const payload = postData.payload;
-    const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAME);
+    const sheet = getSheet();
     
+    if (!sheet) throw new Error("Sheet not found");
+
     if (action === "CREATE") {
       const id = Utilities.getUuid();
       const createdAt = new Date().toISOString();
@@ -75,11 +97,15 @@ function doPost(e) {
     
     else if (action === "DELETE") {
       const data = sheet.getDataRange().getValues();
+      let rowIndex = -1;
       for (let i = 1; i < data.length; i++) {
         if (data[i][0] == payload.id) {
-          sheet.deleteRow(i + 1);
+          rowIndex = i + 1;
           break;
         }
+      }
+      if (rowIndex !== -1) {
+        sheet.deleteRow(rowIndex);
       }
       return createJsonResponse('success', 'Deleted');
     }
