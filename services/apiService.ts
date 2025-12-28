@@ -6,18 +6,35 @@ import { PortfolioItem, ApiResponse } from '../types';
  * Fetch items from Google Sheets via GAS
  */
 export const fetchItems = async (): Promise<PortfolioItem[]> => {
-  if (API_URL.includes('YOUR_SCRIPT_ID')) {
-    console.warn('API_URL is still using placeholder. Please update in constants.tsx');
+  // ตรวจสอบว่า URL ถูกต้องหรือไม่
+  if (!API_URL || API_URL.includes('ระบุ_ID_ที่นี่') || API_URL.includes('YOUR_SCRIPT_ID')) {
+    console.error('API_URL is not configured. Please update constants.tsx');
     return [];
   }
 
   try {
-    // Adding a timestamp to prevent caching issues
-    const response = await fetch(`${API_URL}?t=${Date.now()}`);
+    const response = await fetch(`${API_URL}?t=${Date.now()}`, {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
     const result: ApiResponse = await response.json();
-    return result.data as PortfolioItem[] || [];
+    
+    if (result.status === 'success') {
+      return result.data as PortfolioItem[] || [];
+    } else {
+      console.error('API returned error:', result.message);
+      return [];
+    }
   } catch (error) {
-    console.error('Error fetching items:', error);
+    console.error('Failed to fetch from GAS:', error);
+    // แจ้งเตือนใน console ให้ผู้ใช้เช็คการตั้งค่า Anyone ใน GAS
+    console.warn('โปรดตรวจสอบว่าใน Google Apps Script ได้ตั้งค่า Who has access เป็น "Anyone" แล้วหรือยัง');
     return [];
   }
 };
@@ -26,17 +43,17 @@ export const fetchItems = async (): Promise<PortfolioItem[]> => {
  * Save or Update item
  */
 export const saveItem = async (item: Partial<PortfolioItem>, action: 'CREATE' | 'UPDATE'): Promise<boolean> => {
+  if (!API_URL || API_URL.includes('ระบุ_ID_ที่นี่')) return false;
+
   try {
-    // We use a simple fetch. GAS handles redirects automatically in modern browsers.
-    // Note: GAS doesn't support CORS for POST perfectly with custom headers, 
-    // so we send as a simple request (text/plain) which GAS can still parse.
     const response = await fetch(API_URL, {
       method: 'POST',
       body: JSON.stringify({ action, payload: item }),
     });
     
-    // In many cases with GAS, we might not get a readable response due to CORS
-    // but the data will still be processed on the server side.
+    // GAS often returns 302 redirect which fetch handles, 
+    // but sometimes CORS blocks the JSON response. 
+    // If we reach here, usually the data is already sent.
     return true; 
   } catch (error) {
     console.error('Error saving item:', error);
@@ -48,6 +65,8 @@ export const saveItem = async (item: Partial<PortfolioItem>, action: 'CREATE' | 
  * Delete item
  */
 export const deleteItem = async (id: string): Promise<boolean> => {
+  if (!API_URL || API_URL.includes('ระบุ_ID_ที่นี่')) return false;
+
   try {
     await fetch(API_URL, {
       method: 'POST',

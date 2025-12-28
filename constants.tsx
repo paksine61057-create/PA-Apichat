@@ -20,5 +20,8 @@ export const CATEGORIES: CategoryType[] = [
 
 export const MEDIA_TYPES: MediaType[] = ['PDF', 'YouTube', 'Image', 'Video'];
 
-// URL นี้ต้องเปลี่ยนเป็น URL จากการ Deploy Google Apps Script
-export const API_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+/**
+ * สำคัญมาก: 
+ * นำ URL ที่ได้จาก Google Apps Script (ตอนกด Deploy) มาวางที่นี่
+ */
+export const API_URL = 'https://script.google.com/macros/s/AKfycbzaJsRn-4hOliEegQ09IOKX69hDZ_vUsLLmd7W9XpI6GIChXeyscC0rJz5ak8WtHwCrTQ/exec';
