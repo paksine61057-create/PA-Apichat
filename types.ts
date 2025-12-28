@@ -1,0 +1,34 @@
+
+export type MediaType = 'PDF' | 'YouTube' | 'Image' | 'Video';
+
+export type CategoryType = 
+  | '1.1 การสร้างและ/หรือพัฒนาหลักสูตร'
+  | '1.2 การจัดการเรียนรู้'
+  | '1.3 การสร้างและพัฒนา สื่อ นวัตกรรม...'
+  | '1.4 การวัดและประเมินผลการเรียนรู้'
+  | '1.5 การวิจัยเพื่อพัฒนาการเรียนรู้'
+  | '2.1 การบริหารจัดการชั้นเรียน'
+  | '2.2 การจัดระบบดูแลช่วยเหลือผู้เรียน'
+  | '2.3 การจัดทำข้อมูลสารสนเทศ...'
+  | '3.1 การพัฒนาตนเอง'
+  | '3.2 การพัฒนาวิชาชีพ'
+  | 'นวัตกรรม' 
+  | 'วิจัย' 
+  | 'สื่อการเรียนรู้' 
+  | 'อื่นๆ';
+
+export interface PortfolioItem {
+  id: string;
+  title: string;
+  category: CategoryType;
+  description: string;
+  type: MediaType;
+  url: string;
+  createdAt: string;
+}
+
+export interface ApiResponse {
+  status: 'success' | 'error';
+  data?: PortfolioItem[] | PortfolioItem;
+  message?: string;
+}
